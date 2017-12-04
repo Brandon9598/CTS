@@ -39,5 +39,5 @@ def populate(N=5):
 
 if __name__ == '__main__':
     print("Populating")
-    populate(50000)
+    populate(10000)
     print("Finished Populating")
