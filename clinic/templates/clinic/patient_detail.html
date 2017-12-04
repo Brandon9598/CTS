@@ -1,0 +1,43 @@
+{% extends "clinic/base.html" %}
+
+{% block content %}
+<div class="patientDetail col-lg-6">
+  <h1>Patient: {{ patient.first_name }} {{ patient.last_name }}</h1>
+  <!-- TODO: put height and width into CSS -->
+  {% if patient.photo_ID %}
+  <img class="photo_ID" src="{{ patient.photo_ID.url }}" height="100" width="100">
+  {% endif %}
+  <p>Patient ID: {{ patient.patient_id }}</p>
+  <p>National ID: {{ patient.national_id }}</p>
+  <p>Birthdate: {{ patient.birthdate|date:"M d, Y"}}</p>
+  <p>Address: {{ patient.address }}</p>
+  <p>Primary Language: {{ patient.language }}</p>
+  <!-- TODO: Dispaly the actual gender and bloodtype instead of int value -->
+  <p>Sex: {{ patient.get_sex_display }}</p>
+  <p>Blood Type: {{ patient.get_blood_type_display }}</p>
+
+  <p>Phone Number: {{ patient.phone_num }}</p>
+
+  <a href="{% url 'patient_update' pk=patient.pk %}" class="btn btn-primary">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </a>
+  <a href="{% url 'patient_delete' pk=patient.pk %}" class="btn btn-primary">
+    <span class="glyphicon glyphicon-remove"></span>
+  </a>
+</div>
+
+<div class="patient_visits col-lg-6">
+  {% if patient_visits %}
+  {% for visit in patient_visits %}
+
+  <h3><a href="{% url 'visit_detail' pk=visit.pk %}">Visit: {{ visit.visit_date }}</a></h3>
+  <p>Seen by Dr. {{ visit.doctor }}</p>
+  <p>Symptoms: {{ visit.symptoms }}</p>
+  <p>Notes: {{ visit.notes }}</p>
+  <p>Recommendations: {{ visit.recommendation }}</p>
+
+  {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}
