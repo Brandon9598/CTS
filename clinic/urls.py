@@ -3,6 +3,11 @@ from . import views
 
 urlpatterns = [
     url(r'^$',views.DashView.as_view(),name='dash'),
+    url(r'^doctors/$',views.DoctorListView,name='doctor_list'),
+    url(r'^doctors/(?P<pk>\d+)$',views.DoctorDetailView.as_view(),name='doctor_detail'),
+    url(r'^doctors/add$',views.DoctorCreateView.as_view(),name="doctor_create"),
+    url(r'^doctors/edit/(?P<pk>\d+)$',views.DoctorUpdateView.as_view(),name='doctor_update'),
+    url(r'^doctors/remove/(?P<pk>\d+)$', views.DoctorDeleteView.as_view(),name="doctor_delete"),
     url(r'^patient/$',views.PatientListView ,name='patient_list'),
     url(r'^patient/(?P<pk>\d+)$',views.PatientDetailView.as_view(),name='patient_detail'),
     url(r'^patient/add$',views.PatientCreateView.as_view(),name="patient_create"),

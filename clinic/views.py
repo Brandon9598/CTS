@@ -67,10 +67,6 @@ class PatientDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(PatientDetailView, self).get_context_data(**kwargs)
         context['patient_visits'] = Visit.objects.filter(patient = context['patient'])
-        context_list = ""
-        for item in context:
-            context_list += item + " "
-        context["test"] = context_list
         return context
 
 class PatientCreateView(CreateView):
@@ -114,6 +110,69 @@ class VisitDeleteView(DeleteView):
     model = Visit
     success_url = reverse_lazy('visit_list')
 
+def DoctorListView(request):
+    doctors_per_page = 15
+    queryset_list = Doctor.objects.all()
+    page = request.GET.get('page', 1)
 
-#Add the doctor and visit views
-#Add functions that require a pk match
+    query = request.GET.get("q")
+    if query:
+        queryset_list = queryset_list.filter(
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query) |
+            Q(specialty__icontains=query) |
+            Q(doctor_id__icontains=query)
+        ).distinct()
+
+    paginator = Paginator(queryset_list, doctors_per_page)
+    try:
+        doctor_list = paginator.page(page)
+    except PageNotAnInteger:
+        doctor_list = paginator.page(1)
+    except EmptyPage:
+        doctor_list = paginator.page(paginator.num_pages)
+
+    total_number_of_pages = int(len(queryset_list)/doctors_per_page)
+    context = {
+        "doctor_list": doctor_list,
+        "total_page_count": total_number_of_pages,
+    }
+
+    return render(request, "doctor_list.html", context)
+
+class DoctorDetailView(DetailView):
+    model = Doctor
+
+    def get_context_data(self, **kwargs):
+        context = super(DoctorDetailView, self).get_context_data(**kwargs)
+        context['doctor_visits'] = Visit.objects.filter(doctor = context['doctor'])
+        return context
+
+class DoctorUpdateView(UpdateView):
+    redirect_field_name = 'clinic/doctor_detail.html'
+    form_class = DoctorForm
+    model = Doctor
+
+class DoctorCreateView(CreateView):
+    redirect_field_name = 'clinic/doctor_detail.html'
+    form_class = DoctorForm
+    model = Doctor
+
+class DoctorDeleteView(DeleteView):
+    model = Doctor
+    success_url = reverse_lazy('doctor_list')
+
+
+#ERROR Handling
+def handler404(request):
+    response = render_to_response('clinic/404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
+def handler500(request):
+    response = render_to_response('clinic/500.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 500
+    return response

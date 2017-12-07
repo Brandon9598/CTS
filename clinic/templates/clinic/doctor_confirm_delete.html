@@ -1,0 +1,11 @@
+{% extends "clinic/base.html" %}
+{% block content %}
+<h1>Doctor Delete</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>Are you sure that you want to delete "{{ doctor }}"</p>
+    <input type="submit" class="btn btn-danger" value="Confirm">
+    <button onclick="window.history.back();" class="btn btn-success" type="button">Cancel</button>
+</form>
+
+{% endblock %}

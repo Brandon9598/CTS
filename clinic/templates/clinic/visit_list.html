@@ -1,14 +1,8 @@
 {% extends "clinic/base.html" %}
 {% block content %}
-<h1>Patient Portal:</h1>
+<h1>Visit Portal:</h1>
 <div class="add_visit">
   <a href="{% url 'visit_create' %}">Add new Visit</a>
-</div>
-<div class="basic_search">
-  <form method="GET" action=""]>
-    <input  type="text" name="q"  placeholder="Search..." value="{{ request.GET.q}}" />
-    <input type="submit" value="Search" />
-</form>
 </div>
 <div class="centerstage">
   {% for visit in visit_list %}

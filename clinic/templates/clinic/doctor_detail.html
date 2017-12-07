@@ -1,0 +1,30 @@
+{% extends "clinic/base.html" %}
+
+{% block content %}
+<div class="doctorDetail col-lg-6">
+  <h1>Doctor: {{ doctor.first_name }} {{ doctor.last_name }}</h1>
+
+  <p>Doctor ID: {{ doctor.doctor_id }}</p>
+  <p>Specialty: {{ doctor.specialty }}</p>
+
+  <a href="{% url 'doctor_update' pk=doctor.pk %}" class="btn btn-primary">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </a>
+  <a href="{% url 'doctor_delete' pk=doctor.pk %}" class="btn btn-primary">
+    <span class="glyphicon glyphicon-remove"></span>
+  </a>
+</div>
+
+<div class="doctor_visits col-lg-6">
+  {% if doctor_visits %}
+    {% for visit in doctor_visits %}
+      <h3><a href="{% url 'visit_detail' pk=visit.pk %}">Visit: {{ visit.visit_date }}</a></h3>
+      <p>Saw Patient: {{ visit.patient }}</p>
+      <p>Symptoms: {{ visit.symptoms }}</p>
+      <p>Notes: {{ visit.notes }}</p>
+      <p>Recommendations: {{ visit.recommendation }}</p>
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}
