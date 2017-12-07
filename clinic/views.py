@@ -12,6 +12,9 @@ from django.views.generic import (TemplateView,ListView,
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 # Create your views here.
 class DashView(TemplateView):
     template_name = 'dash.html'
@@ -23,7 +26,10 @@ class HelpView(TemplateView):
     template_name = 'about.html'
 
 def PatientListView(request):
+    patients_per_page = 15
     queryset_list = Patient.objects.all()
+    page = request.GET.get('page', 1)
+
     query = request.GET.get("q")
     if query:
         queryset_list = queryset_list.filter(
@@ -33,8 +39,18 @@ def PatientListView(request):
             Q(national_id__icontains=query)
         ).distinct()
 
+    paginator = Paginator(queryset_list, patients_per_page)
+    try:
+        patient_list = paginator.page(page)
+    except PageNotAnInteger:
+        patient_list = paginator.page(1)
+    except EmptyPage:
+        patient_list = paginator.page(paginator.num_pages)
+
+    total_number_of_pages = int(len(queryset_list)/patients_per_page)
     context = {
-        "patient_list": queryset_list,
+        "patient_list": patient_list,
+        "total_page_count": total_number_of_pages,
     }
 
     return render(request, "patient_list.html", context)

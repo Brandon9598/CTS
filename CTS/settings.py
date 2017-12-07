@@ -25,9 +25,7 @@ SECRET_KEY = 'd3e^!zlv#-g4az@wq06=(*!lfsimay6goohd#e_3j4bzu&x1%5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '0.0.0.0',
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -50,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'clinic.customMiddleware.AuthRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'CTS.urls'

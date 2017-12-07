@@ -17,4 +17,27 @@
     </div>
   {% endfor %}
 </div>
+<!-- Need to limit the number of pages at the bottom of the page to 10  -->
+<!-- I believe this can be achieved using javascript -->
+{% if patient_list.has_other_pages %}
+  <ul class="pagination">
+    {% if patient_list.has_previous %}
+      <li><a href="?page={{ patient_list.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in patient_list.paginator.page_range %}
+      {% if patient_list.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if patient_list.has_next %}
+      <li><a href="?page={{ patient_list.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
 {% endblock %}

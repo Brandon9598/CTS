@@ -1,19 +1,18 @@
 {% extends "clinic/base.html" %}
 
 {% block content %}
-<h1>{{ visit.patient }}</h1>
-<img class="photo_ID" src="{{ visit.patient.photo_ID.url }}">
-<p>Visit Date: {{ visit.visit_date }}</p>
-<p>Seen by Dr. {{ visit.doctor }}</p>
-<p>Symptoms: {{ visit.symptoms }}</p>
-<p>Notes: {{ visit.notes }}</p>
-<p>Recommendations: {{ visit.recommendation }}</p>
+  <h1>{{ visit.patient }}</h1>
+  <img class="photo_ID" src="{{ visit.patient.photo_ID.url }}" height="100" width="100">
+  <p>Visit Date: {{ visit.visit_date }}</p>
+  <p>Seen by Dr. {{ visit.doctor }}</p>
+  <p>Symptoms: {{ visit.symptoms }}</p>
+  <p>Notes: {{ visit.notes }}</p>
+  <p>Recommendations: {{ visit.recommendation }}</p>
 
-<a href="{% url 'visit_update' pk=visit.pk %}" class="btn btn-primary">
-  <span class="glyphicon glyphicon-pencil"></span>
-</a>
-<a href="{% url 'visit_delete' pk=visit.pk %}" class="btn btn-primary">
-  <span class="glyphicon glyphicon-remove"></span>
-</a>
-
+  <a href="{% url 'visit_update' pk=visit.pk %}" class="btn btn-primary">
+    <span class="glyphicon glyphicon-pencil"></span>
+  </a>
+  <a href="{% url 'visit_delete' pk=visit.pk %}" class="btn btn-primary">
+    <span class="glyphicon glyphicon-remove"></span>
+  </a>
 {% endblock %}

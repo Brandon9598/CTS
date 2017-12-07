@@ -24,6 +24,12 @@
         <li><a href="{% url 'help' %}">help</a></li>
         <li><a href="{% url 'about' %}">About</a></li>
       </ul>
+
+      <ul class="nav navbar-right navbar-nav">
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% endif %}
+      </ul>
   </div>
 </nav>
 
