@@ -39,8 +39,7 @@ sudo chmod +x runserver.sh
 ***RUN EVERYTIME COMPUTER BOOTS***
 double clip decryptOnBoot.sh and press "Exectue in Terminal"
 Enter passphrase twice
+double click runserver.sh and press "Exectue in Terminal"
 
 ***RUN EVERYTIME COMPUTER SHUTS DOWN***
 double clip encryptOnShutdown.sh and press "Exectue in Terminal"
-
-###RUN
